@@ -1,497 +1,514 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2-8岁儿童感觉统合测评</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "微软雅黑", sans-serif;
-        }
-        body {
-            background: #f5f5f5;
-            padding: 15px;
-        }
-        .page {
-            display: none;
-        }
-        .page.active {
-            display: block;
-        }
-        .title {
-            font-size: 20px;
-            color: #333;
-            text-align: center;
-            margin: 20px 0;
-        }
-        .start-btn {
-            display: block;
-            width: 80%;
-            height: 45px;
-            line-height: 45px;
-            background: #0088ff;
-            color: white;
-            text-align: center;
-            border-radius: 25px;
-            margin: 50px auto;
-            font-size: 18px;
-            cursor: pointer;
-        }
-        .question-box {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .question-title {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        .option {
-            height: 40px;
-            line-height: 40px;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            padding-left: 15px;
-            font-size: 15px;
-            color: #666;
-            cursor: pointer;
-        }
-        .option.selected {
-            border-color: #0088ff;
-            color: #0088ff;
-        }
-        .progress {
-            height: 5px;
-            background: #eee;
-            border-radius: 3px;
-            margin-bottom: 15px;
-        }
-        .progress-bar {
-            height: 100%;
-            background: #0088ff;
-            border-radius: 3px;
-            width: 0%;
-        }
-        .btn-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .nav-btn {
-            width: 48%;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .prev-btn {
-            border: 1px solid #666;
-            color: #666;
-        }
-        .next-btn {
-            background: #0088ff;
-            color: white;
-            border: none;
-        }
-        .submit-btn {
-            width: 100%;
-            height: 45px;
-            line-height: 45px;
-            background: #0088ff;
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-        .result-box {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .dim-name {
-            font-size: 16px;
-            color: #0088ff;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .score-info {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        .level {
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-        .level span {
-            padding: 2px 8px;
-            border-radius: 5px;
-            color: white;
-        }
-        .level-severe span { background: #ff3333; }
-        .level-moderate span { background: #ff9900; }
-        .level-mild span { background: #ffcc00; }
-        .level-normal span { background: #00cc66; }
-        .suggestion {
-            font-size: 14px;
-            color: #333;
-            line-height: 1.5;
-        }
-        .total-result {
-            background: #e6f7ff;
-            border: 1px solid #91d5ff;
-        }
-        .restart-btn {
-            width: 100%;
-            height: 45px;
-            line-height: 45px;
-            background: #0088ff;
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>儿童感觉统合测评系统</title>
+<style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif;}
+    body{background:#f5f7fa;padding:10px;}
+    .page{display:none;}
+    .page.active{display:block;}
+    .container{max-width:800px;margin:0 auto;}
+    .title{font-size:24px;font-weight:bold;text-align:center;margin:20px 0;color:#333;}
+    .inst-tip{text-align:center;font-size:14px;color:#666;margin-bottom:15px;}
+    .card{background:#fff;border-radius:12px;padding:20px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+    .form-group{margin-bottom:18px;}
+    .form-label{font-size:16px;color:#333;margin-bottom:8px;display:block;}
+    .form-input,.form-select{width:100%;height:44px;border:1px solid #eee;border-radius:8px;padding:0 12px;font-size:15px;}
+    .form-textarea{width:100%;min-height:90px;border:1px solid #eee;border-radius:8px;padding:12px;font-size:15px;line-height:1.6;resize:none;}
+    .section-title{font-size:18px;font-weight:bold;color:#2b7dff;margin:25px 0 12px 0;}
+    .tip{font-size:13px;color:#999;margin-top:4px;}
+    .btn{width:100%;height:48px;background:#2b7dff;color:#fff;border:none;border-radius:8px;font-size:17px;font-weight:bold;margin:10px 0;cursor:pointer;}
+    .btn-outline{background:#fff;color:#2b7dff;border:1px solid #2b7dff;}
+    .question-box{margin-bottom:20px;}
+    .question-title{font-size:16px;color:#333;margin-bottom:12px;line-height:1.5;}
+    .option{height:42px;line-height:42px;border:1px solid #eee;border-radius:8px;padding:0 15px;margin-bottom:8px;font-size:15px;color:#555;cursor:pointer;}
+    .option.selected{border-color:#2b7dff;color:#2b7dff;background:#f0f7ff;}
+    .progress{height:6px;background:#f0f0f0;border-radius:3px;margin-bottom:15px;overflow:hidden;}
+    .progress-bar{height:100%;background:#2b7dff;width:0%;}
+    .btn-group{display:flex;gap:10px;margin-top:20px;}
+    .btn-group .btn{flex:1;}
+    .child-info-card{background:#f0f7ff;border:1px solid #c6e2ff;border-radius:8px;padding:15px;margin-bottom:15px;font-size:15px;line-height:1.7;}
+    .result-item{border-left:4px solid #2b7dff;background:#fff;border-radius:8px;padding:15px;margin-bottom:12px;}
+    .result-title{font-size:17px;font-weight:bold;color:#2b7dff;margin-bottom:8px;}
+    .result-score{font-size:15px;color:#666;margin-bottom:6px;}
+    .result-level{font-size:15px;margin-bottom:8px;}
+    .result-level span{padding:2px 8px;border-radius:4px;color:#fff;font-size:14px;}
+    .level-severe{background:#ff4d4f;}
+    .level-moderate{background:#ff7d00;}
+    .level-mild{background:#ffc107;}
+    .level-normal{background:#00c48c;}
+    .result-suggest{font-size:15px;line-height:1.6;color:#333;}
+    .total-result{background:#e6f7ff;border:1px solid #91d5ff;}
+    .history-item{background:#fff;border-radius:8px;padding:15px;margin-bottom:10px;border-left:4px solid #2b7dff;cursor:pointer;}
+    .history-name{font-size:16px;font-weight:bold;color:#333;margin-bottom:4px;}
+    .history-basic{font-size:14px;color:#666;margin-bottom:4px;}
+    .history-time{font-size:13px;color:#999;}
+    .empty-history{text-align:center;padding:40px;color:#999;font-size:16px;}
+    .login-box{max-width:400px;margin:60px auto;background:#fff;border-radius:12px;padding:30px;box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+    .error-tip{color:#ff4d4f;text-align:center;margin-top:10px;font-size:14px;display:none;}
+    .back-link{text-align:center;margin-top:10px;}
+    .back-link a{color:#2b7dff;font-size:14px;text-decoration:none;}
+</style>
 </head>
 <body>
-    <!-- 首页 -->
-    <div class="page active" id="page-index">
-        <div class="title">2-8岁儿童感觉统合能力测评</div>
-        <div class="start-btn" onclick="startTest()">开始测评</div>
-        <div style="text-align:center; color:#666; font-size:14px;">共64题，预计5-10分钟完成</div>
+
+<div class="container">
+    <!-- 登录 -->
+    <div class="page active" id="page-login">
+        <div class="login-box">
+            <div class="title">机构登录</div>
+            <div class="form-group">
+                <label class="form-label">机构账号</label>
+                <input class="form-input" id="account" placeholder="请输入机构账号">
+            </div>
+            <div class="form-group">
+                <label class="form-label">登录密码</label>
+                <input type="password" class="form-input" id="pwd" placeholder="请输入登录密码">
+            </div>
+            <button class="btn" onclick="login()">登录进入测评</button>
+            <button class="btn btn-outline" onclick="goHistory()">查看历史记录</button>
+            <div class="error-tip" id="errTip">账号或密码错误</div>
+        </div>
+    </div>
+
+    <!-- 信息页 -->
+    <div class="page" id="page-info">
+        <div class="title">儿童感觉统合测评</div>
+        <div class="inst-tip" id="instName"></div>
+
+        <div class="card">
+            <div class="section-title">一、儿童基本信息</div>
+            <div class="form-group">
+                <label class="form-label">儿童姓名</label>
+                <input class="form-input" id="childName">
+            </div>
+            <div class="form-group">
+                <label class="form-label">性别</label>
+                <select class="form-select" id="childGender">
+                    <option value="">请选择</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">年龄（岁）</label>
+                <input type="number" class="form-input" id="childAge" min="2" max="12">
+            </div>
+            <div class="form-group">
+                <label class="form-label">家长联系电话</label>
+                <input class="form-input" id="parentPhone">
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">二、成长环境信息</div>
+            <div class="form-group">
+                <label class="form-label">出生方式</label>
+                <select class="form-select" id="birthType">
+                    <option value="">请选择</option>
+                    <option value="顺产">顺产</option>
+                    <option value="剖腹产">剖腹产</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">爬行情况</label>
+                <select class="form-select" id="crawl">
+                    <option value="">请选择</option>
+                    <option value="正常爬行">正常爬行</option>
+                    <option value="少爬行/未爬行">少爬行/未爬行</option>
+                    <option value="不清楚">不清楚</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">主要带养人</label>
+                <select class="form-select" id="caregiver">
+                    <option value="">请选择</option>
+                    <option value="父母">父母</option>
+                    <option value="祖辈">祖辈</option>
+                    <option value="保姆">保姆</option>
+                    <option value="混合抚养">混合抚养</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">每日亲子互动时间</label>
+                <select class="form-select" id="parentTime">
+                    <option value="">请选择</option>
+                    <option value="1小时以内">1小时以内</option>
+                    <option value="1-2小时">1-2小时</option>
+                    <option value="2小时以上">2小时以上</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-title">三、日常行为描述</div>
+            <div class="form-group">
+                <label class="form-label">语言表达能力</label>
+                <textarea class="form-textarea" id="langDesc" placeholder="例如：说话晚、发音不清、表达不连贯、不爱说话、词汇量少等"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">情绪与行为表现</label>
+                <textarea class="form-textarea" id="emoDesc" placeholder="例如：急躁、爱哭、胆小、暴躁、不合群、攻击行为、情绪波动大等"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">注意力与专注力</label>
+                <textarea class="form-textarea" id="focusDesc" placeholder="例如：坐不住、容易分心、上课走神、写作业拖拉、注意力持续时间短等"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">动作协调与运动能力</label>
+                <textarea class="form-textarea" id="sportDesc" placeholder="例如：容易摔跤、手脚笨拙、不会跳绳、不会拍球、精细动作差等"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">自信心与社交表现</label>
+                <textarea class="form-textarea" id="confDesc" placeholder="例如：胆小自卑、害怕陌生环境、不愿与人交往、过度依赖、怕生等"></textarea>
+            </div>
+        </div>
+
+        <button class="btn" onclick="startTest()">开始测评</button>
+        <div class="back-link"><a href="javascript:goLogin()">返回登录</a></div>
     </div>
 
     <!-- 测评页 -->
     <div class="page" id="page-test">
-        <div class="progress">
-            <div class="progress-bar" id="progressBar"></div>
+        <div class="title">测评进行中</div>
+        <div class="inst-tip" id="testInst"></div>
+        <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+        <div id="questionBox"></div>
+        <div class="btn-group" id="navBtns">
+            <button class="btn btn-outline" onclick="prevQ()">上一题</button>
+            <button class="btn" onclick="nextQ()">下一题</button>
         </div>
-        <div id="questionContainer"></div>
-        <div class="btn-group" id="navBtnGroup">
-            <div class="nav-btn prev-btn" onclick="prevQuestion()">上一题</div>
-            <div class="nav-btn next-btn" onclick="nextQuestion()">下一题</div>
-        </div>
-        <div class="submit-btn" id="submitBtn" style="display:none;" onclick="submitTest()">提交测评</div>
+        <button class="btn" id="submitBtn" style="display:none;" onclick="submitTest()">提交测评</button>
+        <div class="back-link"><a href="javascript:goInfo()">返回信息填写</a></div>
     </div>
 
     <!-- 结果页 -->
     <div class="page" id="page-result">
         <div class="title">测评结果报告</div>
+        <div class="inst-tip" id="resultInst"></div>
+        <div class="child-info-card" id="childInfoCard"></div>
         <div id="resultContainer"></div>
-        <div class="restart-btn" onclick="restartTest()">重新测评</div>
+        <div class="btn-group">
+            <button class="btn" onclick="goInfo()">重新测评</button>
+            <button class="btn btn-outline" onclick="goHistory()">历史记录</button>
+        </div>
+        <div class="back-link"><a href="javascript:goLogin()">返回登录</a></div>
     </div>
 
-    <script>
-        // 64题题库
-        const questions = [
-            {id:1, dim:"前庭平衡", title:"儿童特别爱玩旋转圆凳,玩公园中旋转地球或飞转设施,不觉晕。"},
-            {id:2, dim:"前庭平衡", title:"儿童看来正常、健康，有正常智慧，但学习阅读或做算术特难。"},
-            {id:3, dim:"前庭平衡", title:"在眼看得见情况下，屡碰撞桌椅、杯子或旁人，方向和距离感差。"},
-            {id:4, dim:"前庭平衡", title:"手舞足蹈，吃饭、写字、打鼓时双手或双脚配合不良，常忘另一边。"},
-            {id:5, dim:"前庭平衡", title:"表面上左撇子，左右手都用，或尚未固定偏好使用哪一只手。"},
-            {id:6, dim:"前庭平衡", title:"大动作笨拙，容易跌倒，并不会用手支撑保护自己；拉他时显得笨重。"},
-            {id:7, dim:"前庭平衡", title:"语音不清晰，组合句子或编组故事困难。"},
-            {id:8, dim:"前庭平衡", title:"看书眼睛会累，却可以长时间看电视。"},
-            {id:9, dim:"前庭平衡", title:"俯卧地板床上时，无法把头、颈、胸、手脚举高离地（如飞机状）。"},
-            {id:10, dim:"前庭平衡", title:"喜欢听故事，不喜欢看书，听的容易记住，看的却容易忘记。"},
-            {id:11, dim:"前庭平衡", title:"走路跑跳常碰撞东西，不善与同伴投球和传球，排队和游戏有困难。"},
-            {id:12, dim:"脑神经抑制", title:"注意力分散，不专心，小动作多，或上课左顾右盼。"},
-            {id:13, dim:"脑神经抑制", title:"偏食或挑食：不吃水果、软皮的食物、肉类、蛋类，只吃白饭、奶等。"},
-            {id:14, dim:"脑神经抑制", title:"害羞，见到陌生人赶紧躲避或紧张捻衣角，皱眉头，口吃说不出话。"},
-            {id:15, dim:"脑神经抑制", title:"看电视电影，很容易激动；高兴时又叫又跳，恐怖片不敢看。"},
-            {id:16, dim:"脑神经抑制", title:"严重怕黑，到暗处要有人陪，晚上拒绝出去，不喜欢到空屋子去。"},
-            {id:17, dim:"脑神经抑制", title:"换床睡不着，换枕头或被子睡不好，出外总是对睡眠空间担心。"},
-            {id:18, dim:"脑神经抑制", title:"别人为他用棉棒清洁鼻子和耳朵时，他往往觉得不舒服。"},
-            {id:19, dim:"脑神经抑制", title:"喜欢往亲人的身上挨靠或搂抱，象被宠坏或被溺爱的孩子。"},
-            {id:20, dim:"脑神经抑制", title:"睡觉时总爱触摸被角，抱棉被，衣物或玩具，否则会出现不安或睡不好。"},
-            {id:21, dim:"触觉防御", title:"脾气不好，对亲人特别暴躁，常常为琐事无故发脾气，遇事会强词夺理。"},
-            {id:22, dim:"触觉防御", title:"到新的场合或人多的地方不久，就要求离开或自己跑掉。"},
-            {id:23, dim:"触觉防御", title:"轻微病后多次向人表示不喜欢去幼儿园；没原因或为小事对幼儿园产生恐惧。"},
-            {id:24, dim:"触觉防御", title:"常吮舔手指头或咬指甲，不喜欢别人帮剪指甲。"},
-            {id:25, dim:"触觉防御", title:"不喜欢脸被别人碰和帮他洗脸。洗头或理发为最痛苦的事。"},
-            {id:26, dim:"触觉防御", title:"成人帮他拉袖口和袜子，或协助穿衣服而碰他皮肤时会引起他的反感。"},
-            {id:27, dim:"触觉防御", title:"游戏中或玩玩具时，担心别人从后面逼近，为此而引起苦恼。"},
-            {id:28, dim:"触觉防御", title:"到处碰、触摸不停，但又避免触碰毛毯和编织玩具的表面。"},
-            {id:29, dim:"触觉防御", title:"常常喜欢穿宽松的长袖衣衫，不冷也常喜欢穿毛线衫或夹克。"},
-            {id:30, dim:"触觉防御", title:"爱谈天或做无接触的交往，但很不愿意跟朋友搭肩或做肌肤接触。"},
-            {id:31, dim:"触觉防御", title:"对某些布料很敏感，不喜欢那类布料所做的衣服。"},
-            {id:32, dim:"触觉防御", title:"对自己的事物很敏感，很容易动情，计划或结果改变时不能容忍。"},
-            {id:33, dim:"触觉防御", title:"对无所谓的瘀伤，小肿块，小刀伤等，总觉得很痛而诉怨不止。"},
-            {id:34, dim:"触觉防御", title:"顽固偏执不合作，一直坚持依自己的方式办事，对事没有灵活性。"},
-            {id:35, dim:"发育运用障碍", title:"三、四岁尚不会洗手，上厕所不会自行擦屁股。"},
-            {id:36, dim:"发育运用障碍", title:"三、四岁尚不会使用筷子，或一直用汤勺吃饭，不会拿笔。"},
-            {id:37, dim:"发育运用障碍", title:"四、五岁不会玩骑上、爬下或钻进去等的大玩具。"},
-            {id:38, dim:"发育运用障碍", title:"五、六岁不会站起来用脚荡秋千，不会攀绳网或爬竹竿。"},
-            {id:39, dim:"发育运用障碍", title:"穿脱袜子、衣服、扣纽扣、系鞋带等动作，向来非常慢，或做不来。"},
-            {id:40, dim:"发育运用障碍", title:"入学后尚不会自己洗澡；单脚跳，跳绳等都做不好也学不好。"},
-            {id:41, dim:"发育运用障碍", title:"入学后对拿笔写字，剪贴作业，着色等做得不好或非常慢。"},
-            {id:42, dim:"发育运用障碍", title:"饭桌上经常弄得很脏，成人要求他收拾好书桌或玩具很困难。"},
-            {id:43, dim:"发育运用障碍", title:"做手工、做家务事很笨拙，使用工具抓握动作很不顺手。"},
-            {id:44, dim:"发育运用障碍", title:"动作懒散，行动迟缓不积极；做事非常没效率。"},
-            {id:45, dim:"发育运用障碍", title:"常惹事，如弄翻碗盘，弄洒牛奶，从车上跌落等，需家长特别保护。"},
-            {id:46, dim:"视觉空间", title:"在年幼时，玩积木总比别人差。"},
-            {id:47, dim:"视觉空间", title:"外出或远行时常达不到目的地，很容易迷失，不喜欢到陌生的地方。"},
-            {id:48, dim:"视觉空间", title:"蜡笔着色和铅笔写字都不好，比别人慢，常超出轮廓或方格之外。"},
-            {id:49, dim:"视觉空间", title:"拼图总比别人差；对模型或图样的异同辨别常有困难。"},
-            {id:50, dim:"视觉空间", title:"混淆背景中的特定图形，不易看出或认出。"},
-            {id:51, dim:"重力不安症", title:"内向，不喜出去玩，朋友少，沉默寡言，喜欢独处或帮家里做事。"},
-            {id:52, dim:"重力不安症", title:"上下阶梯或过马路多迟疑；登高会觉得头重脚轻不敢向别处看或走动。"},
-            {id:53, dim:"重力不安症", title:"被抱起举高时，很焦虑的要把脚着地，经可信赖人的帮助会安心配合。"},
-            {id:54, dim:"重力不安症", title:"避免从高处跳到低处，对高地或有跌落危险时，表现非常害怕。"},
-            {id:55, dim:"重力不安症", title:"不喜欢把头脚倒置：如避免翻筋斗，打滚，或参加室内打斗游戏活动。"},
-            {id:56, dim:"重力不安症", title:"对游乐设施不感兴趣，不喜欢移动性玩具。"},
-            {id:57, dim:"重力不安症", title:"对不寻常移动（如上下车，前座移到后座，走不平地面）动作缓慢。"},
-            {id:58, dim:"重力不安症", title:"上下楼梯很慢，紧紧的抓住栏杆；双手可抓紧的简单攀登，都尽量避免。"},
-            {id:59, dim:"重力不安症", title:"旋转时，很容易感到失去平衡。车行进中，转弯太快也会吓坏自己。"},
-            {id:60, dim:"重力不安症", title:"不喜欢在凸起的地面上走，总会抱怨或心中感到太高。"},
-            {id:61, dim:"心绪自我形象", title:"成绩暴落，神态恍惚，读书很容易分心，常有情绪行为问题。"},
-            {id:62, dim:"心绪自我形象", title:"脾气暴躁，自制能力差，打架骂人等恶劣行为加剧。"},
-            {id:63, dim:"头晕成绩下降", title:"对师长的要求或学习，环境等压力，常承受不了，易产生挫折感。"},
-            {id:64, dim:"头晕成绩下降", title:"对自己的形象感觉不良，认为自己很差劲，产生情绪和行为问题。"}
-        ];
+    <!-- 历史页 -->
+    <div class="page" id="page-history">
+        <div class="title">测评历史记录</div>
+        <div class="inst-tip" id="historyInst"></div>
+        <div id="historyList"></div>
+        <button class="btn" onclick="goLogin()">返回登录</button>
+    </div>
+</div>
 
-        const options = [
-            {text:"没有(1)", score:1},
-            {text:"很少(2)", score:2},
-            {text:"偶尔(3)", score:3},
-            {text:"常常(4)", score:4},
-            {text:"总是(5)", score:5}
-        ];
+<script>
+let currentInst = "";
+let childData = {};
+let currentQ = [];
+let answers = {};
+let index = 0;
 
-        let currentIndex = 0;
-        let answers = {};
+const instAccounts = {
+    "小飞象": "123456",
+    "乐艺感统": "123456",
+    "金色童年": "123456"
+};
 
-        // 切换页面
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
+const questions = [
+{id:1,dim:"前庭平衡",title:"儿童特别爱玩旋转圆凳，玩公园中旋转地球或飞转设施，不觉晕。"},
+{id:2,dim:"前庭平衡",title:"儿童看来正常、健康，有正常智慧，但学习阅读或做算术特难。"},
+{id:3,dim:"前庭平衡",title:"在眼看得见情况下，屡碰撞桌椅、杯子或旁人，方向和距离感差。"},
+{id:4,dim:"前庭平衡",title:"手舞足蹈，吃饭、写字、打鼓时双手或双脚配合不良，常忘另一边。"},
+{id:5,dim:"前庭平衡",title:"表面上左撇子，左右手都用，或尚未固定偏好使用哪一只手。"},
+{id:6,dim:"前庭平衡",title:"大动作笨拙，容易跌倒，并不会用手支撑保护自己；拉他时显得笨重。"},
+{id:7,dim:"前庭平衡",title:"语音不清晰，组合句子或编组故事困难。"},
+{id:8,dim:"前庭平衡",title:"看书眼睛会累，却可以长时间看电视。"},
+{id:9,dim:"前庭平衡",title:"俯卧地板床上时，无法把头、颈、胸、手脚举高离地（如飞机状）。"},
+{id:10,dim:"前庭平衡",title:"喜欢听故事，不喜欢看书，听的容易记住，看的却容易忘记。"},
+{id:11,dim:"前庭平衡",title:"走路跑跳常碰撞东西，不善与同伴投球和传球，排队和游戏有困难。"},
+{id:12,dim:"脑神经抑制",title:"注意力分散，不专心，小动作多，或上课左顾右盼。"},
+{id:13,dim:"脑神经抑制",title:"偏食或挑食：不吃水果、软皮的食物、肉类、蛋类，只吃白饭、奶等。"},
+{id:14,dim:"脑神经抑制",title:"害羞，见到陌生人赶紧躲避或紧张捻衣角，皱眉头，口吃说不出话。"},
+{id:15,dim:"脑神经抑制",title:"看电视电影，很容易激动；高兴时又叫又跳，恐怖片不敢看。"},
+{id:16,dim:"脑神经抑制",title:"严重怕黑，到暗处要有人陪，晚上拒绝出去，不喜欢到空屋子去。"},
+{id:17,dim:"脑神经抑制",title:"换床睡不着，换枕头或被子睡不好，出外总是对睡眠空间担心。"},
+{id:18,dim:"脑神经抑制",title:"别人为他用棉棒清洁鼻子和耳朵时，他往往觉得不舒服。"},
+{id:19,dim:"脑神经抑制",title:"喜欢往亲人的身上挨靠或搂抱，象被宠坏或被溺爱的孩子。"},
+{id:20,dim:"脑神经抑制",title:"睡觉时总爱触摸被角，抱棉被，衣物或玩具，否则会出现不安或睡不好。"},
+{id:21,dim:"触觉防御",title:"脾气不好，对亲人特别暴躁，常常为琐事无故发脾气，遇事会强词夺理。"},
+{id:22,dim:"触觉防御",title:"到新的场合或人多的地方不久，就要求离开或自己跑掉。"},
+{id:23,dim:"触觉防御",title:"轻微病后多次向人表示不喜欢去幼儿园；没原因或为小事对幼儿园产生恐惧。"},
+{id:24,dim:"触觉防御",title:"常吮舔手指头或咬指甲，不喜欢别人帮剪指甲。"},
+{id:25,dim:"触觉防御",title:"不喜欢脸被别人碰和帮他洗脸。洗头或理发为最痛苦的事。"},
+{id:26,dim:"触觉防御",title:"成人帮他拉袖口和袜子，或协助穿衣服而碰他皮肤时会引起他的反感。"},
+{id:27,dim:"触觉防御",title:"游戏中或玩玩具时，担心别人从后面逼近，为此而引起苦恼。"},
+{id:28,dim:"触觉防御",title:"到处碰、触摸不停，但又避免触碰毛毯和编织玩具的表面。"},
+{id:29,dim:"触觉防御",title:"常常喜欢穿宽松的长袖衣衫，不冷也常喜欢毛线衫或夹克。"},
+{id:30,dim:"触觉防御",title:"爱谈天或做无接触的交往，但很不愿意跟朋友搭肩或做肌肤接触。"},
+{id:31,dim:"触觉防御",title:"对某些布料很敏感，不喜欢那类布料所做的衣服。"},
+{id:32,dim:"触觉防御",title:"对自己的事物很敏感，很容易动情，计划或结果改变时不能容忍。"},
+{id:33,dim:"触觉防御",title:"对无所谓的瘀伤，小肿块，小刀伤等，总觉得很痛而诉怨不止。"},
+{id:34,dim:"触觉防御",title:"顽固偏执不合作，一直坚持依自己的方式办事，对事没有灵活性。"},
+{id:35,dim:"发育运用障碍",title:"三、四岁尚不会洗手，上厕所不会自行擦屁股。"},
+{id:36,dim:"发育运用障碍",title:"三、四岁尚不会使用筷子，或一直用汤勺吃饭，不会拿笔。"},
+{id:37,dim:"发育运用障碍",title:"四、五岁不会玩骑上、爬下或钻进去等的大玩具。"},
+{id:38,dim:"发育运用障碍",title:"五、六岁不会站起来用脚荡秋千，不会攀绳网或爬竹竿。"},
+{id:39,dim:"发育运用障碍",title:"穿脱袜子、衣服、扣纽扣、系鞋带等动作，向来非常慢，或做不来。"},
+{id:40,dim:"发育运用障碍",title:"入学后尚不会自己洗澡；单脚跳，跳绳等都做不好也学不好。"},
+{id:41,dim:"发育运用障碍",title:"入学后对拿笔写字，剪贴作业，着色等做得不好或非常慢。"},
+{id:42,dim:"发育运用障碍",title:"饭桌上经常弄得很脏，成人要求他收拾好书桌或玩具很困难。"},
+{id:43,dim:"发育运用障碍",title:"做手工、做家务事很笨拙，使用工具抓握动作很不顺手。"},
+{id:44,dim:"发育运用障碍",title:"动作懒散，行动迟缓不积极；做事非常没效率。"},
+{id:45,dim:"发育运用障碍",title:"常惹事，如弄翻碗盘，弄洒牛奶，从车上跌落等，需家长特别保护。"},
+{id:46,dim:"视觉空间",title:"在年幼时，玩积木总比别人差。"},
+{id:47,dim:"视觉空间",title:"外出或远行时常达不到目的地，很容易迷失，不喜欢到陌生的地方。"},
+{id:48,dim:"视觉空间",title:"蜡笔着色和铅笔写字都不好，比别人慢，常超出轮廓或方格之外。"},
+{id:49,dim:"视觉空间",title:"拼图总比别人差；对模型或图样的异同辨别常有困难。"},
+{id:50,dim:"视觉空间",title:"混淆背景中的特定图形，不易看出或认出。"},
+{id:51,dim:"重力不安症",title:"内向，不喜出去玩，朋友少，沉默寡言，喜欢独处或帮家里做事。"},
+{id:52,dim:"重力不安症",title:"上下阶梯或过马路多迟疑；登高会觉得头重脚轻不敢向别处看或走动。"},
+{id:53,dim:"重力不安症",title:"被抱起举高时，很焦虑的要把脚着地，经可信赖人的帮助会安心配合。"},
+{id:54,dim:"重力不安症",title:"避免从高处跳到低处，对高地或有跌落危险时，表现非常害怕。"},
+{id:55,dim:"重力不安症",title:"不喜欢把头脚倒置：如避免翻筋斗，打滚，或参加室内打斗游戏活动。"},
+{id:56,dim:"重力不安症",title:"对游乐设施不感兴趣，不喜欢移动性玩具。"},
+{id:57,dim:"重力不安症",title:"对不寻常移动（如上下车，前座移到后座，走不平地面）动作缓慢。"},
+{id:58,dim:"重力不安症",title:"上下楼梯很慢，紧紧的抓住栏杆；双手可抓紧的简单攀登，都尽量避免。"},
+{id:59,dim:"重力不安症",title:"旋转时，很容易感到失去平衡。车行进中，转弯太快也会吓坏自己。"},
+{id:60,dim:"重力不安症",title:"不喜欢在凸起的地面上走，总会抱怨或心中感到太高。"},
+{id:61,dim:"心绪自我形象",title:"成绩暴落，神态恍惚，读书很容易分心，常有情绪行为问题。"},
+{id:62,dim:"心绪自我形象",title:"脾气暴躁，自制能力差，打架骂人等恶劣行为加剧。"},
+{id:63,dim:"头晕成绩下降",title:"对师长的要求或学习，环境等压力，常承受不了，易产生挫折感。"},
+{id:64,dim:"头晕成绩下降",title:"对自己的形象感觉不良，认为自己很差劲，产生情绪和行为问题。"}
+];
 
-        // 开始测评
-        function startTest() {
-            currentIndex = 0;
-            answers = {};
-            showPage('page-test');
-            renderQuestion();
-            updateProgress();
-        }
+const options = [
+    { text: "没有", score: 1 },
+    { text: "很少", score: 2 },
+    { text: "偶尔", score: 3 },
+    { text: "常常", score: 4 },
+    { text: "总是", score: 5 }
+];
 
-        // 渲染题目
-        function renderQuestion() {
-            const q = questions[currentIndex];
-            let html = `<div class="question-box"><div class="question-title">${q.id}. ${q.title}</div>`;
-            options.forEach(opt => {
-                const selected = answers[q.id] === opt.score;
-                html += `<div class="option ${selected ? 'selected' : ''}" onclick="selectOption(${q.id}, ${opt.score}, this)">${opt.text}</div>`;
-            });
-            html += `</div>`;
-            document.getElementById('questionContainer').innerHTML = html;
+function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+function goLogin() { showPage('page-login'); }
+function goInfo() { showPage('page-info'); }
+function goTest() { showPage('page-test'); }
+function goResult() { showPage('page-result'); }
+function goHistory() { showPage('page-history'); loadHistory(); }
 
-            if (currentIndex === questions.length - 1) {
-                document.getElementById('navBtnGroup').style.display = 'none';
-                document.getElementById('submitBtn').style.display = 'block';
-            } else {
-                document.getElementById('navBtnGroup').style.display = 'flex';
-                document.getElementById('submitBtn').style.display = 'none';
-            }
-        }
+function login() {
+    let account = document.getElementById('account').value.trim();
+    let pwd = document.getElementById('pwd').value.trim();
+    let tip = document.getElementById('errTip');
+    tip.style.display = 'none';
+    if (!account || !pwd) { tip.textContent = '请输入账号和密码'; tip.style.display = 'block'; return; }
+    if (instAccounts[account] && instAccounts[account] === pwd) {
+        currentInst = account;
+        document.getElementById('instName').textContent = "当前机构：" + currentInst;
+        document.getElementById('testInst').textContent = "当前机构：" + currentInst;
+        document.getElementById('resultInst').textContent = "当前机构：" + currentInst;
+        document.getElementById('historyInst').textContent = "当前机构：" + currentInst;
+        goInfo();
+    } else {
+        tip.textContent = '账号或密码错误'; tip.style.display = 'block';
+    }
+}
 
-        // 选择选项
-        function selectOption(qId, score, el) {
-            el.parentNode.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-            el.classList.add('selected');
-            answers[qId] = score;
-        }
+function startTest() {
+    childData = {
+        name: document.getElementById('childName').value.trim(),
+        gender: document.getElementById('childGender').value,
+        age: document.getElementById('childAge').value,
+        phone: document.getElementById('parentPhone').value.trim(),
+        birth: document.getElementById('birthType').value,
+        crawl: document.getElementById('crawl').value,
+        caregiver: document.getElementById('caregiver').value,
+        parentTime: document.getElementById('parentTime').value,
+        lang: document.getElementById('langDesc').value.trim() || '未填写',
+        emo: document.getElementById('emoDesc').value.trim() || '未填写',
+        focus: document.getElementById('focusDesc').value.trim() || '未填写',
+        sport: document.getElementById('sportDesc').value.trim() || '未填写',
+        conf: document.getElementById('confDesc').value.trim() || '未填写'
+    };
+    if (!childData.name || !childData.gender || !childData.age || !childData.phone || !childData.birth || !childData.crawl || !childData.caregiver || !childData.parentTime) {
+        alert('请填写完整信息'); return;
+    }
+    currentQ = questions;
+    index = 0;
+    answers = {};
+    goTest();
+    renderQ();
+    updateProgress();
+}
 
-        // 上一题
-        function prevQuestion() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                renderQuestion();
-                updateProgress();
-            }
-        }
+function renderQ() {
+    let q = currentQ[index];
+    let html = `<div class="question-box"><div class="question-title">${q.id}. ${q.title}</div>`;
+    options.forEach(o => {
+        let sel = answers[q.id] === o.score ? 'selected' : '';
+        html += `<div class="option ${sel}" onclick="selectAns(${q.id},${o.score},this)">${o.text}</div>`;
+    });
+    html += '</div>';
+    document.getElementById('questionBox').innerHTML = html;
+    if (index === currentQ.length - 1) {
+        document.getElementById('navBtns').style.display = 'none';
+        document.getElementById('submitBtn').style.display = 'block';
+    } else {
+        document.getElementById('navBtns').style.display = 'flex';
+        document.getElementById('submitBtn').style.display = 'none';
+    }
+}
 
-        // 下一题
-        function nextQuestion() {
-            if (!answers[questions[currentIndex].id]) {
-                alert("请选择一个选项");
-                return;
-            }
-            if (currentIndex < questions.length - 1) {
-                currentIndex++;
-                renderQuestion();
-                updateProgress();
-            }
-        }
+function selectAns(qid, score, el) {
+    el.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    answers[qid] = score;
+}
 
-        // 更新进度
-        function updateProgress() {
-            const percent = ((currentIndex + 1) / questions.length) * 100;
-            document.getElementById('progressBar').style.width = percent + '%';
-        }
+function prevQ() {
+    if (index > 0) { index--; renderQ(); updateProgress(); }
+}
 
-        // 提交测评
-        function submitTest() {
-            if (Object.keys(answers).length !== questions.length) {
-                alert("请完成所有题目后提交");
-                return;
-            }
-            const result = calculateScore();
-            renderResult(result);
-            showPage('page-result');
-        }
+function nextQ() {
+    if (!answers[currentQ[index].id]) { alert('请选择一项'); return; }
+    if (index < currentQ.length - 1) { index++; renderQ(); updateProgress(); }
+}
 
-        // 计算分数
-        function calculateScore() {
-            const dimConfig = {
-                "前庭平衡": [1,2,3,4,5,6,7,8,9,10,11],
-                "脑神经抑制": [12,13,14,15,16,17,18,19,20],
-                "触觉防御": [21,22,23,24,25,26,27,28,29,30,31,32,33,34],
-                "发育运用障碍": [35,36,37,38,39,40,41,42,43,44,45],
-                "视觉空间": [46,47,48,49,50],
-                "重力不安症": [51,52,53,54,55,56,57,58,59,60],
-                "心绪自我形象": [61,62],
-                "头晕成绩下降": [63,64]
-            };
+function updateProgress() {
+    let per = ((index + 1) / currentQ.length) * 100;
+    document.getElementById('progressBar').style.width = per + '%';
+}
 
-            const tScoreMap = {
-                "前庭平衡": {11:70,12:64,13:60,14:57,15:54,16:52,17:49,18:47,19:45,20:43,21:41,22:39,23:37,24:36,25:34,26:32,27:31,28:29,29:28,30:27,31:26,32:25,33:25,34:23,35:20,36:16,37:16,38:15,39:14,40:12,41:12,42:12,43:11,44:10},
-                "脑神经抑制": {9:73,10:69,11:67,12:64,13:62,14:60,15:58,16:55,17:53,18:51,19:49,20:48,21:46,22:44,23:42,24:40,25:39,26:37,27:36,28:34,29:32,30:30,31:28,32:26,33:25,34:23,35:22,36:20,37:16,38:12,40:8},
-                "触觉防御": {14:70,15:65,16:63,17:61,18:59,19:57,20:55,21:53,22:51,23:50,24:48,25:47,26:45,27:44,28:42,29:41,30:40,31:38,32:37,33:36,34:34,35:33,36:32,37:31,38:29,39:28,40:26,41:26,42:25,43:24,47:21,51:20,52:16},
-                "发育运用障碍": {11:65,12:59,13:57,14:55,15:53,16:51,17:47,18:47,19:45,20:44,21:42,22:40,23:39,24:38,25:36,26:35,27:34,28:33,29:32,30:31,31:29,32:28,33:28,34:26,35:25,36:24,37:23,38:22,39:21,40:20,43:16},
-                "视觉空间": {5:61,6:54,7:50,8:48,9:45,10:41,11:38,12:35,13:32,14:30,15:27,16:25,17:23,18:22,19:20,20:16},
-                "重力不安症": {10:64,11:59,12:56,13:54,14:52,15:51,16:49,17:48,18:46,19:45,20:43,21:42,22:40,23:38,24:37,25:35,26:34,27:33,28:32,29:30,31:29,32:26,33:25,34:23,36:22,40:16},
-                "心绪自我形象": {2:57,3:49,4:44,5:38,6:33,7:29,8:25,9:22,10:20},
-                "头晕成绩下降": {2:57,3:48,4:43,5:38,6:33,7:28,8:25,9:20,10:16}
-            };
+function submitTest() {
+    if (!currentQ.every(q => answers[q.id] != null)) { alert('请完成所有题目'); return; }
+    let result = calcResult();
+    saveRecord(childData, result);
+    showReport(childData, result);
+    goResult();
+}
 
-            const suggestionMap = {
-                "前庭平衡": {
-                    "重度":"尽快进行专业感统机构干预，重点训练前庭觉和大脑双侧分化，配合家庭日常的攀爬、跳跃类活动，提升大动作能力。",
-                    "中度":"每周4-5次专项训练，含前庭刺激（滑滑梯、转椅）+双侧分化训练（双手拍球、折纸），每次20分钟，改善动作笨拙和方向感差问题。",
-                    "轻度":"每天10-15分钟平衡训练（平衡木、单脚站）、旋转类游戏（转圈圈、荡秋千），提升肢体协调和空间感。",
-                    "正常":"多进行旋转、抛接球、平衡类游戏，维持前庭功能发育。"
-                },
-                "脑神经抑制": {
-                    "重度":"专业感统干预+行为引导，通过触觉刺激、情绪安抚训练，改善注意力分散、情绪易激动和环境适应障碍。",
-                    "中度":"制定规律的生活作息表，每天15分钟专注力训练，配合触觉安抚（轻拍、拥抱），缓解情绪敏感和环境适应不良。",
-                    "轻度":"通过专注力小游戏（找不同、串珠）提升注意力，纠正挑食习惯，逐步适应新环境和陌生人。",
-                    "正常":"保持规律的饮食、睡眠习惯，多参与集体活动，维持注意力稳定性。"
-                },
-                "触觉防御": {
-                    "重度":"专业触觉脱敏干预，从温和的触觉刺激开始，逐步降低触觉防御，同时进行情绪管理训练，改善脾气暴躁和偏执行为。",
-                    "中度":"系统进行触觉脱敏训练（触摸不同材质、洗头/理发逐步适应），配合情绪疏导，改善触觉防御和社交中的肌肤接触抗拒。",
-                    "轻度":"逐步接触不同材质的衣物、玩具，每天进行5分钟的触觉按摩（毛巾擦身），缓解触觉敏感，减少情绪暴躁。",
-                    "正常":"多进行不同材质的触摸游戏（沙土、橡皮泥、毛巾），保持触觉感知能力。"
-                },
-                "发育运用障碍": {
-                    "重度":"专业感统机构的肢体运用训练，配合家庭的日常自我服务动作练习，重点提升精细动作和大动作的协调性、熟练度。",
-                    "中度":"每周5次精细+大动作专项训练，每次20分钟，从简单的自我服务动作（洗手、擦屁股）开始，逐步提升肢体协调和运用能力。",
-                    "轻度":"每天10分钟精细动作训练（扣纽扣、系鞋带、握笔练习），配合大动作游戏（单脚跳、跳绳），改善动作笨拙和效率低问题。",
-                    "正常":"多进行精细动作游戏（搭积木、夹豆子）、大动作训练（跑跳、攀爬），提升肢体运用能力。"
-                },
-                "视觉空间": {
-                    "重度":"专业视觉空间训练，配合感统干预，改善图形辨别、方向感和视觉动作协调问题。",
-                    "中度":"每周4次视觉空间专项训练（搭复杂积木、迷宫、图形匹配），每次15分钟，提升视觉辨别和空间感知能力。",
-                    "轻度":"每天10分钟视觉训练（拼图、找图形、涂色），改善方向感差和图形辨别困难。",
-                    "正常":"多进行搭积木、拼图、涂色游戏，提升视觉空间和形态感知能力。"
-                },
-                "重力不安症": {
-                    "重度":"专业感统的重力适应干预，从温和的移动、登高训练开始，逐步降低对重力和移动的恐惧，同时引导参与社交游戏。",
-                    "中度":"系统进行重力适应训练（从低到高的登高、缓慢旋转、平衡训练），每次15分钟，每周4次，改善内向和重力不安。",
-                    "轻度":"逐步进行轻度登高、跳跃训练（爬台阶、跳格子），缓解对高地和移动的恐惧，多参与户外集体游戏。",
-                    "正常":"多进行登高、跳跃、旋转类游戏，提升对重力的适应能力。"
-                },
-                "心绪自我形象": {
-                    "重度":"专业心理疏导+感统系统干预，重点改善情绪行为问题，提升抗压能力和自我形象认知。",
-                    "中度":"配合心理疏导+感统干预，改善情绪暴躁和挫折感，逐步提升学习能力和自我认知。",
-                    "轻度":"加强亲子沟通，及时疏导负面情绪，通过小目标达成培养自信心，缓解学习压力。",
-                    "正常":"多给予鼓励和肯定，培养自信心，引导正确面对学习和社交压力。"
-                },
-                "头晕成绩下降": {
-                    "重度":"专业心理疏导+感统系统干预，重点改善情绪行为问题，提升抗压能力和自我形象认知。",
-                    "中度":"配合心理疏导+感统干预，改善情绪暴躁和挫折感，逐步提升学习能力和自我认知。",
-                    "轻度":"加强亲子沟通，及时疏导负面情绪，通过小目标达成培养自信心，缓解学习压力。",
-                    "正常":"多给予鼓励和肯定，培养自信心，引导正确面对学习和社交压力。"
-                },
-                "综合": {
-                    "重度":"孩子存在重度感觉统合失常，必须尽快寻求专业感统训练机构进行系统干预，同时配合家庭训练巩固效果。建议先到专业感统机构进行全面评估，制定个性化的训练方案，机构训练每周2-3次，家庭训练每日进行，重点针对重度失常维度进行强化训练；同时关注孩子的情绪和社交发展，多进行亲子互动和情绪疏导，坚持3-6个月可显著提升感统能力，后续仍需持续训练和巩固。",
-                    "中度":"孩子存在中度感觉统合失常，主要涉及失常维度，需要系统家庭训练+定期观察，必要时可结合专业感统指导。建议制定每日训练计划，每周训练5-6次，每次30分钟，按失常维度的专业建议进行专项训练，同时配合生活中的感统融入（如穿衣、吃饭时的精细动作训练，出门时的方向感训练）；每月对孩子的表现进行一次评估，若3个月无明显改善，及时寻求专业感统机构帮助。",
-                    "轻度":"孩子存在轻度感觉统合失常，以失常维度为主要问题，无需专业机构干预，通过家庭针对性训练即可改善。建议每天累计20-30分钟感统训练，重点针对失常维度进行专项练习，其余维度做基础维持训练；同时关注孩子的情绪和行为表现，多给予鼓励，训练以游戏形式进行，避免孩子产生抵触心理，坚持1-2个月可明显改善。",
-                    "正常":"孩子感觉统合能力发展整体正常，各维度无明显失常表现。建议日常保持充足的户外活动（每天1小时以上），多参与跑跳、攀爬、拼图、集体游戏等，兼顾大动作、精细动作、触觉、视觉空间等能力的维持，同时保持规律的饮食、睡眠和社交，持续促进感统能力发育。"
-                }
-            };
+function calcResult() {
+    let dims = {
+        "前庭平衡": [1,2,3,4,5,6,7,8,9,10,11],
+        "脑神经抑制": [12,13,14,15,16,17,18,19,20],
+        "触觉防御": [21,22,23,24,25,26,27,28,29,30,31,32,33,34],
+        "发育运用障碍": [35,36,37,38,39,40,41,42,43,44,45],
+        "视觉空间": [46,47,48,49,50],
+        "重力不安症": [51,52,53,54,55,56,57,58,59,60],
+        "心绪自我形象": [61,62],
+        "头晕成绩下降": [63,64]
+    };
+    let res = {};
+    let hasSevere = false, hasModerate = false, hasMild = false;
+    for (let d in dims) {
+        let ids = dims[d];
+        let sum = ids.reduce((s, id) => s + (answers[id] || 0), 0);
+        let t = 0;
+        if (d === "前庭平衡") t = sum * 2.1 + 20;
+        else if (d === "脑神经抑制") t = sum * 2.3 + 18;
+        else if (d === "触觉防御") t = sum * 1.9 + 22;
+        else if (d === "发育运用障碍") t = sum * 2.0 + 21;
+        else if (d === "视觉空间") t = sum * 2.5 + 15;
+        else if (d === "重力不安症") t = sum * 2.2 + 19;
+        else t = sum * 3.0 + 10;
+        let level = "正常";
+        if (t >= 70) { level = "重度"; hasSevere = true; }
+        else if (t >= 60) { level = "中度"; hasModerate = true; }
+        else if (t >= 50) { level = "轻度"; hasMild = true; }
+        res[d] = { raw: sum, t: Math.round(t), level: level };
+    }
+    let total = "正常";
+    if (hasSevere) total = "重度";
+    else if (hasModerate) total = "中度";
+    else if (hasMild) total = "轻度";
+    res.total = total;
+    return res;
+}
 
-            let result = {};
-            let hasSevere = false, hasModerate = false, hasMild = false;
+function showReport(child, result) {
+    let info = `
+儿童姓名：${child.name}　性别：${child.gender}　年龄：${child.age}岁<br>
+家长电话：${child.phone}<br>
+出生方式：${child.birth}　爬行情况：${child.crawl}<br>
+带养人：${child.caregiver}　亲子时间：${child.parentTime}<br>
+语言表达：${child.lang}<br>
+情绪行为：${child.emo}<br>
+注意力：${child.focus}<br>
+动作协调：${child.sport}<br>
+自信心：${child.conf}
+    `;
+    document.getElementById('childInfoCard').innerHTML = info;
+    let order = ["前庭平衡","脑神经抑制","触觉防御","发育运用障碍","视觉空间","重力不安症","心绪自我形象","头晕成绩下降"];
+    let html = "";
+    order.forEach(d => {
+        let r = result[d];
+        let cls = "";
+        if (r.level === "重度") cls = "level-severe";
+        else if (r.level === "中度") cls = "level-moderate";
+        else if (r.level === "轻度") cls = "level-mild";
+        else cls = "level-normal";
+        html += `
+<div class="result-item">
+    <div class="result-title">${d}</div>
+    <div class="result-score">原始分：${r.raw}　T分：${r.t}</div>
+    <div class="result-level">失常程度：<span class="${cls}">${r.level}</span></div>
+</div>`;
+    });
+    html += `
+<div class="result-item total-result">
+    <div class="result-title">综合评定</div>
+    <div class="result-level">整体感统发展：<span class="${result.total === '重度' ? 'level-severe' : result.total === '中度' ? 'level-moderate' : result.total === '轻度' ? 'level-mild' : 'level-normal'}">${result.total}失常</span></div>
+</div>`;
+    document.getElementById('resultContainer').innerHTML = html;
+}
 
-            for (let dim in dimConfig) {
-                let rawScore = 0;
-                dimConfig[dim].forEach(qId => rawScore += answers[qId] || 0);
-                let tScore = tScoreMap[dim][rawScore] || 0;
-                if (tScore === 0) {
-                    const keys = Object.keys(tScoreMap[dim]).map(Number);
-                    const closest = keys.reduce((a, b) => Math.abs(b - rawScore) < Math.abs(a - rawScore) ? b : a);
-                    tScore = tScoreMap[dim][closest];
-                }
-                let level = "正常";
-                if (tScore < 30) { level = "重度"; hasSevere = true; }
-                else if (tScore <= 40) { level = "中度"; hasModerate = true; }
-                else if (tScore <= 50) { level = "轻度"; hasMild = true; }
-                result[dim] = { rawScore, tScore, level, suggestion: suggestionMap[dim][level] };
-            }
+function saveRecord(child, res) {
+    let record = {
+        inst: currentInst,
+        child: child,
+        result: res,
+        time: new Date().toLocaleString(),
+        id: Date.now()
+    };
+    let hist = JSON.parse(localStorage.getItem('testHistory') || '[]');
+    hist.unshift(record);
+    localStorage.setItem('testHistory', JSON.stringify(hist));
+}
 
-            let totalLevel = "正常";
-            if (hasSevere) totalLevel = "重度";
-            else if (hasModerate) totalLevel = "中度";
-            else if (hasMild) totalLevel = "轻度";
-            result["综合"] = { level: totalLevel, suggestion: suggestionMap["综合"][totalLevel] };
+function loadHistory() {
+    let hist = JSON.parse(localStorage.getItem('testHistory') || '[]');
+    let list = hist.filter(h => h.inst === currentInst);
+    let box = document.getElementById('historyList');
+    if (list.length === 0) { box.innerHTML = '<div class="empty-history">暂无测评记录</div>'; return; }
+    let html = "";
+    list.forEach(h => {
+        let c = h.child;
+        html += `
+<div class="history-item" onclick="viewHistory(${h.id})">
+    <div class="history-name">${c.name}（${c.age}岁）</div>
+    <div class="history-basic">${c.gender} | ${c.phone}</div>
+    <div class="history-time">${h.time}</div>
+</div>`;
+    });
+    box.innerHTML = html;
+}
 
-            return result;
-        }
-
-        // 渲染结果
-        function renderResult(result) {
-            const dims = ["前庭平衡", "脑神经抑制", "触觉防御", "发育运用障碍", "视觉空间", "重力不安症", "心绪自我形象", "头晕成绩下降", "综合"];
-            let html = "";
-            dims.forEach(dim => {
-                const data = result[dim];
-                if (!data) return;
-                let levelClass = "level-normal";
-                if (data.level === "重度") levelClass = "level-severe";
-                else if (data.level === "中度") levelClass = "level-moderate";
-                else if (data.level === "轻度") levelClass = "level-mild";
-                html += `<div class="result-box ${dim === "综合" ? "total-result" : ""}">
-                    <div class="dim-name">${dim}</div>`;
-                if (dim !== "综合") {
-                    html += `<div class="score-info">原始分：${data.rawScore} | T分：${data.tScore}</div>`;
-                }
-                html += `<div class="level ${levelClass}">失常程度：<span>${data.level}</span></div>
-                    <div class="suggestion">专业建议：${data.suggestion}</div>
-                </div>`;
-            });
-            document.getElementById('resultContainer').innerHTML = html;
-        }
-
-        // 重新测评
-        function restartTest() {
-            showPage('page-index');
-        }
-    </script>
+function viewHistory(id) {
+    let hist = JSON.parse(localStorage.getItem('testHistory') || '[]');
+    let item = hist.find(h => h.id === id);
+    if (item) {
+        showReport(item.child, item.result);
+        goResult();
+    }
+}
+</script>
 </body>
 </html>
